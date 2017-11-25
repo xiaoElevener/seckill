@@ -48,7 +48,7 @@ public class SeckillServiceImplTest {
             long phone=134515646L;
             String md5=exposer.getMd5();
             try {
-                SeckillExecution execution = seckillService.excuteSeckill(id, phone, md5);
+                SeckillExecution execution = seckillService.executeSeckill(id, phone, md5);
                 log.info("execution={}", execution);
             } catch (RepeatKillException e) {
                 log.error(e.getMessage());
@@ -63,6 +63,18 @@ public class SeckillServiceImplTest {
         /**
          * result=Exposer(exposed=true, md5=9599d1742f871b9d550507113f4bd695, seckillId=1000, now=0, start=0, end=0)
          */
+    }
+
+    @Test
+    public  void exeuteSeckillByProcedure(){
+        long seckillId=1002L;
+        long phone = 12349878911L;
+        Exposer exposer = seckillService.exportSeckillUrl(seckillId);
+        if(exposer.isExposed()){
+            String md5=exposer.getMd5();
+            SeckillExecution seckillExecution= seckillService.exeuteSeckillByProcedure(seckillId, phone, md5);
+            log.info("seckillExecution={}",seckillExecution);
+        }
     }
 
 }
